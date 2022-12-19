@@ -9,6 +9,7 @@
       <th>商品</th>
       <th>價格</th>
       <th>數量</th>
+      <th>刪除</th>
     </tr>
   </table>
   <br>
@@ -35,12 +36,28 @@
       const cell1 = row.insertCell(0);
       const cell2 = row.insertCell(1);
       const cell3 = row.insertCell(2);
+      const cell4 = row.insertCell(3);
       cell1.innerHTML = product;
       cell2.innerHTML = '$' + price;
       cell3.innerHTML = quantity;
+      const deleteButton = document.createElement('button');
+      deleteButton.innerHTML = '刪除';
+      deleteButton.addEventListener('click', deleteRow);
+      cell4.appendChild(deleteButton);
       total += totalPrice;
       document.getElementById('total').innerHTML = total;
+    }
+
+    function deleteRow(event) {
+      const button = event.target;
+      const row = button.parentNode.parentNode;
+      const price = parseFloat(row.cells[1].innerHTML.substring(1));
+      const quantity = parseInt(row.cells[2].innerHTML);
+      total -= price * quantity;
+      document.getElementById('total').innerHTML = total;
+      row.parentNode.deleteRow(row.rowIndex);
     }
   </script>
 </body>
 </html>
+
